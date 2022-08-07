@@ -7,10 +7,12 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id","username","age"})  //연관관계 필드는 tostring에 넣지 말자.
 public class Member {
+
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -21,6 +23,15 @@ public class Member {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
+
+    public Member(String username) {
+        this.username=username;
+    }
+
+    public Member(String username, int age) {
+        this.username=username;
+        this.age=age;
+    }
 
     public static Member generateMember(String username, int age, Team team) {
         Member member = new Member();
